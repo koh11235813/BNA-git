@@ -17,6 +17,8 @@ double SimpInt(int n, double a, double b) {
         S += func(i * h + a) + 4.0 * func((i + 0.5)* h + a) + func((i + 1.0)* h + a);
     }
     S *= h/6.0;
+
+    return S;
 }
 
 int main(void) {
