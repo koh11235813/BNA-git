@@ -35,8 +35,8 @@ int main()
 ## 03 Answer quantitatively the changes of the relative errors between the analytical solution $S_0$ and the numerical solutions as the number � of subintervals increases.
 
 $ S_0 = \int^2_0\frac{1}{1+x}dx. $
-\
-Simpsons' Rule
+
+### Simpsons' Rule
 ```C
 double SimpInt(int n,double a,double b)
 {
@@ -53,8 +53,8 @@ double SimpInt(int n,double a,double b)
     return S;
 }
 ```
-\
-main function
+
+### main function
 ```C
 #include<stdio.h>
 #include<stdlib.h>
@@ -72,8 +72,8 @@ int main()
     }
 }
 ```
-\
-Example Result
+
+### Example Result
 ```
 n= 10 Simpson=0.693147 error=2.80035e-07
 n= 100 Simpson=0.693147 error=2.81759e-11
@@ -86,8 +86,8 @@ n=10000000 Simpson=0.693147 error=8.12069e-14
 
 ## 04 Compute MSE(0.1) numerically.
 $ MSE(v) = 1-\int^{\infty}_{-\infty}\tanh^2\left(\frac{x}{\sqrt{v}}+\frac{1}{v}\right)\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}dx $
-\
-Integrand
+
+### Integrand
 ```C
 double func(double x,double v)
 {
@@ -98,5 +98,10 @@ double func(double x,double v)
 }
 ```
 
-Upperbound
-$ \int^a_{-a}\tanh^2\left(\frac{x}{\sqrt{v}}+\frac{1}{v}\right)\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}dx \ｌ
+### Upperbound
+$ \int^a_{-a}\tanh^2\left(\frac{x}{\sqrt{v}}+\frac{1}{v}\right)\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}dx \leqq \int^a_{-a}\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}dx = 2 \int^a_0\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}dx $
+### How to determine a
+Select the minimum of a such that the following holds.
+$ 2 \int^{\infty}_a\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}dx \ll Errors\ caused\ by\ Simpson's\ rule$
+
+## 05
