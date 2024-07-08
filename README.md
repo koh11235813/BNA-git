@@ -35,7 +35,7 @@ int main()
 ## 03 Answer quantitatively the changes of the relative errors between the analytical solution $S_0$ and the numerical solutions as the number � of subintervals increases.
 
 $ S_0 = \int^2_0\frac{1}{1+x}dx. $
-\\
+\
 Simpsons' Rule
 ```C
 double SimpInt(int n,double a,double b)
@@ -53,7 +53,7 @@ double SimpInt(int n,double a,double b)
     return S;
 }
 ```
-\\
+\
 main function
 ```C
 #include<stdio.h>
@@ -72,7 +72,7 @@ int main()
     }
 }
 ```
-\\
+\
 Example Result
 ```
 n= 10 Simpson=0.693147 error=2.80035e-07
@@ -83,3 +83,20 @@ n= 100000 Simpson=0.693147 error=5.12548e-15
 n= 1000000 Simpson=0.693147 error=5.44583e-15
 n=10000000 Simpson=0.693147 error=8.12069e-14
 ```
+
+## 04 Compute MSE(0.1) numerically.
+$ MSE(v) = 1-\int^{\infty}_{-\infty}\tanh^2\left(\frac{x}{\sqrt{v}}+\frac{1}{v}\right)\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}dx $
+\
+Integrand
+```C
+double func(double x,double v)
+{
+    double t;
+
+    t = tanh(x/sqrt(v) + 1.0/v);
+    return t*t*exp(-x*x/2.0)/sqrt(2.0*M_PI);
+}
+```
+
+Upperbound
+$ \int^a_{-a}\tanh^2\left(\frac{x}{\sqrt{v}}+\frac{1}{v}\right)\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}dx \ｌ
