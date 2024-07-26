@@ -126,7 +126,8 @@ int main(void)
     printf("xr0:");
     scanf("%lf",&vr0);
     */
-
+    //vはSIGMAとALPHAの間にあるらしいことが問題文からわかるので入力はしない
+    //とりあえず，SIGMAとALPHAの間で考える
     vl0 = SIGMA2;
     vr0 = ALPHA;
     mse1 = mseBisection(n, b, x, vl0, vr0);
@@ -136,14 +137,14 @@ int main(void)
 
     for(i = mse1; i > vl0; i -= 0.1) {
         mse2 = mseBisection(n, b, x, vl0, i);
-        if (fabs(mse1 - mse2) >= 0.1){
+        if (fabs(mse1 - mse2) >= 1e-5){
             break;
         }
     }
 
     //mse3 = mseBisection(n, b, x, mse1, vr0);
 
-    for(i = mse1; i < vr0; i += 0.01) {
+    for(i = mse1; i < vr0; i -= 0.01) {
         mse3 = mseBisection(n, b, x, mse2, i);
         if (fabs(mse1 - mse3) >= 1e-5) {
             break;
