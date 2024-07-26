@@ -2,7 +2,7 @@
 #include <math.h>
 
 #define ERR 1.0e-13
-#define EPS 1.0e-11
+#define EPS 1.0e-13
 #define SIGMA2 0.1
 #define ALPHA 1.8
 
@@ -87,6 +87,8 @@ double mseBisection(int n, double b, double x, double vl0, double vr0)
 
 int main(void)
 {
+    int n;
+    double i, j;
     double S, v, a, b, x;
     double vl0, vr0, mse1;
 
@@ -102,7 +104,7 @@ int main(void)
         }
     }
 
-    int n;
+
     S = 0;
     b = -x;
     double dump = 0;
@@ -117,14 +119,41 @@ int main(void)
 	//ここまででシンプソン法でMSE(v)のn, x, bが定まり，あとはvを求めるだけ
 	//ここでvは**0.1**にされている
 	printf("dump:%1.8f\nn:%d\nx:%f\nb:%f\n", dump, n, x, b);
-
+	/*
 	printf("xl0:");
     scanf("%lf",&vl0);
 
     printf("xr0:");
     scanf("%lf",&vr0);
+    */
 
+    vl0 = SIGMA2;
+    vr0 = ALPHA;
     mse1 = mseBisection(n, b, x, vl0, vr0);
+
+    double mse2 = -1, mse3 = -1;
+    //mse2 = mseBisection(n, b, x, vl0, mse1);
+
+    for(i = mse1; i > vl0; i -= 0.1) {
+        mse2 = mseBisection(n, b, x, vl0, i);
+        if (fabs(mse1 - mse2) >= 0.1){
+            break;
+        }
+    }
+
+    //mse3 = mseBisection(n, b, x, mse1, vr0);
+
+    for(i = mse1; i < vr0; i += 0.01) {
+        mse3 = mseBisection(n, b, x, mse2, i);
+        if (fabs(mse1 - mse3) >= 1e-5) {
+            break;
+        }
+    }
+
+
     printf("1. %1.8f\n", mse1);
+    printf("2. %1.8f\n", mse2);
+    printf("3. %1.8f\n", mse3);
+
 
 }
