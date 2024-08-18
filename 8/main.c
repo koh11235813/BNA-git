@@ -1,3 +1,6 @@
+//the project file was uploaded on "git@github.com:koh11235813/BNA-git.git"
+//
+
 #include <stdio.h>
 #include <math.h>
 
@@ -136,7 +139,7 @@ int main(void)
     double gv[10240];
 
     fp = fopen("./data.csv", "w");
-    for (i = 0, v = SIGMA2; v < 2; v += 0.001, i++) {
+    for (i = 0, v = SIGMA2; v < 2; v += 0.0005, i++) {
         gv[i]=g(v, b, x, n);
         fprintf(fp, "a,v,%2.6f,%2.6f\n",gv[i], v);
         printf("%2.6f,%2.6f\n",gv[i], v);
