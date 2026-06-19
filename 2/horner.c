@@ -1,20 +1,29 @@
 #include <stdio.h>
 #include <math.h>
 
-int main(void)
+double horner(double x, double s, int n)
 {
-	int m, n;
-	double x, S;
+    int m;
 
-	n = 10;
-	x = 1.0;
-
-	S=1.0;
+    s=1.0;
 	for (m = n; m > 0; m--) {
-		S = 1.0 + x * S/(double)m;
+		s = 1.0 + x * s/(double)m;
 	}
 
-	printf("|S-exp(x)|=%g for n = %d and x = %g \n", fabs(S - exp(1.0)), n , x);
-	
+    return s;
+}
+
+int main(void)
+{
+	int n = 50;
+	double x = 1.0;
+    double s = 0;
+    double answer = 0;
+
+	for (int i = 1; i < n ; i++) {
+        answer = horner(x, s, i);
+        printf("|S-exp(x)|=%g for n = %d and x = %g \n", fabs(answer - exp(1.0)), i , x);
+	}
+
 	return 0;
 }
