@@ -3,7 +3,7 @@
 #include <math.h>
 #define ERR 1e-12
 
-double func(double x, double v)
+double func2(double x, double v)
 {
     double t;
 
@@ -11,12 +11,12 @@ double func(double x, double v)
     return t*t*exp(-x*x/2.0)/sqrt(2.0*M_PI);
 }
 
-double func2(double x){
+double func(double x){
     return 2*exp(-x*x/2.0)/sqrt(2.0*M_PI);
 }
 
 
-double SimpInt(int n, double a, double b, double v)
+double SimpInt2(int n, double a, double b, double v)
 {
 	int i;
 	double S, h;
@@ -24,7 +24,7 @@ double SimpInt(int n, double a, double b, double v)
 	S =0.0;
 	h = (b - a)/(double)n;
 	for (i = 0; i < n; i++){
-		S += func(i * h + a, v)+4.0*func((i + 0.5)* h + a, v)+func((i + 1.0)* h + a, v);
+		S += func2(i * h + a, v)+4.0*func2((i + 0.5)* h + a, v)+func2((i + 1.0)* h + a, v);
 	}
 	S *= h/6.0;
 
@@ -32,7 +32,7 @@ double SimpInt(int n, double a, double b, double v)
 
 }
 
-double SimpInt2(int n, double a, double b)
+double SimpInt(int n, double a, double b)
 {
 	int i;
 	double S, h;
@@ -40,7 +40,7 @@ double SimpInt2(int n, double a, double b)
 	S =0.0;
 	h = (b - a)/(double)n;
 	for (i = 0; i < n; i++){
-		S += func2(i * h + a)+4.0*func2((i + 0.5)* h + a)+func2((i + 1.0)* h + a);
+		S += func(i * h + a)+4.0*func((i + 0.5)* h + a)+func((i + 1.0)* h + a);
 	}
 	S *= h/6.0;
 
@@ -54,22 +54,27 @@ int main(void)
     x = 1;
     b = 100;
     for (a = b - 0.01; a > 0; a -= 0.01) {
-        S = SimpInt2(1000, a, b);
-        printf("a = %0.10f Simpson = %8g\n",a ,S);
+        S = SimpInt(1000, a, b);
+//        S = 1 - erf(a/sqrt(2));
+        printf("a = %0.2f Simpson = %8g\n",a ,S);
         if (S > ERR){
             x = a;
+            puts("");
             break;
         }
     }
-    
+
     int n;
-    S = 0;
     b = -x;
 	for (n = 10; n <= 1e+7; n *= 10){
-		S = SimpInt(n, b, x, v);
-		printf("n = %8d Simpson = %lf\n",n ,1 - S);
+		double integral = SimpInt2(n, b, x, v);
+        double mse = 1.0 - integral;
+		printf("n = %8d Simpson = %lf\n",n ,mse);
+        printf("Integral range: [%.2f, %.2f]\n", b, x);
+        printf("Estimated error: %.10f\n", 1.0 - erf(a / sqrt(2.0)));
+        printf("Final value of a: %.2f\n\n", a);
 	}
 
-    
+
     return 0;
 }
